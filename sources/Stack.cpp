@@ -19,7 +19,7 @@ class Stack
 
   };
   const T& head() const
-      {
+  {
 
   };
 };
