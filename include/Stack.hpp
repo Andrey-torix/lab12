@@ -1,5 +1,4 @@
 // Copyright 2020 Andreytorix
-
 #include <iostream>
 
 template <typename T>
