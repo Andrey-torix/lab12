@@ -1,8 +1,8 @@
 // Copyright 2020 Andreytorix
 #include <gtest/gtest.h>
 #include <utility>
-#include "include/Stack.hpp"
-#include "include/Stack_2.hpp"
+#include "../include/Stack.hpp"
+#include "../include/Stack_2.hpp"
 
 class MyClass {
     std::string name;
