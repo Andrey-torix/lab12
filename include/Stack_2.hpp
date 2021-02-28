@@ -1,5 +1,5 @@
 template <typename T>
-class Stack
+class Stack_2
 {
 private:
     struct Node
@@ -7,10 +7,10 @@ private:
         Node* next;
         T obj;
     };
-public:   
+public:
     Node* nodeHead;
     size_t length;
-    Stack() {
+    Stack_2() {
         nodeHead = NULL;
         length = 0;
     };
@@ -21,22 +21,23 @@ public:
         length++;
         nodeHead = nd;
     }
-    void push(const T& value) {
-        Node* nd = new Node;
-        nd->obj = std::move(value);
-        nd->next = nodeHead;
-        length++;
-        nodeHead = nd;
+    template <typename ... Args>
+    void push_emplace(Args&&...  value){
+        T arr[] = { std::move(value)...};
+        for (int i = 0; i < sizeof...(value); ++i){
+            push(std::move(arr[i]));
+        }
     }
-
-    size_t Length() {
+    size_t Length(){
         return length;
     }
-    void pop() {
-        if (length > 0){
-        T tmp = std::move(nodeHead->obj);
-        nodeHead = std::move(nodeHead->next);
-        length--;
+
+    T pop() {
+        if (length > 0) {
+            T tmp = std::move(nodeHead->obj);
+            nodeHead = std::move(nodeHead->next);
+            length--;
+            return tmp;
         }
     }
     const T& head() const {
@@ -44,3 +45,5 @@ public:
         return ref;
     }
 };
+
+
