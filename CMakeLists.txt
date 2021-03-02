@@ -13,15 +13,16 @@ set(
   CACHE STRING "Default cache server"
 )
 
-include("cmake/HunterGate.cmake")
+include("tools/gate/cmake/HunterGate.cmake")
 
 HunterGate(
   URL "https://github.com/cpp-pm/hunter/archive/v0.23.278.tar.gz"
   SHA1 "35fa55bc1dfcf9f4d7264f8bb26cd1759ce1ae07"
 )
 
-# TODO: rename project and delete this comment
-project(template VERSION 0.1.0)
+
+#имя проекта
+project(lab2)
 string(APPEND CMAKE_CXX_FLAGS " -pedantic -Werror -Wall -Wextra")
 string(APPEND CMAKE_CXX_FLAGS " -Wno-unused-command-line-argument")
 string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
@@ -54,14 +55,11 @@ add_test(NAME unit_tests COMMAND tests)
 #file(COPY misc DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 if(BUILD_COVERAGE)
-  set(ENABLE_COVERAGE ON CACHE BOOL "Enable coverage build." FORCE)
-  list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/tools/coverage/cmake")
-  find_package(codecov)
-  string(APPEND CMAKE_CXX_FLAGS " --coverage")
-  add_coverage(${PROJECT_NAME})
-  add_coverage(tests)
-  coverage_evaluate()
-endif()
+  function(ENABLE_PROJECT_COVERAGE PROJECT)
+    target_compile_options(${PROJECT} PRIVATE --coverage)
+    target_link_libraries(${PROJECT} --coverage)
+    add_coverage(${PROJECT})
+  endfunction()
 
   set(ENABLE_COVERAGE ON CACHE BOOL "Enable coverage build." FORCE)
   list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
