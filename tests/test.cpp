@@ -11,7 +11,7 @@ TEST(TestCaseUsed_memory, Test1) {
 	m.OnRawDataLoad(old_items, new_items);
   EXPECT_EQ(m.Used(), 30);
 }
-/*TEST(TestItems, Test2) {
+TEST(TestItems, Test2) {
 	UsedMemory m;
 	std::vector<Item> old_items1{};
 	std::vector<Item> new_items1{};
@@ -41,5 +41,5 @@ TEST(incorrect, EmptyFile) {
 	EXPECT_THROW(pageContainer->Load(emptyfile,10), std::runtime_error);
 	delete(usedMemory);
 	delete(pageContainer);
-}*/
+}
 
