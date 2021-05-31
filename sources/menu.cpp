@@ -1,3 +1,4 @@
+// Copyright 2021 Andreytorix
 #include "menu.hpp"
 #include <iostream>
 #include "Histogram.hpp"
@@ -7,15 +8,15 @@
 #include "Log.hpp"
 void EApplication::menu(int argc, const char** argv) { 
         ar = argc;
-        m_desk.add_options()("help", "вызов справки")
+        m_desk.add_options()("help", "ГўГ»Г§Г®Гў Г±ГЇГ°Г ГўГЄГЁ")
             ("log_debug", "off/on = Info/Debug")
-            ("input", boost::program_options::value<std::string>(&input_path)->composing()->default_value("data.txt"), "Путь к файлу")
-            ("threshold", boost::program_options::value<int>(&threshold)->composing()->default_value(1), "порог");
+            ("input", boost::program_options::value<std::string>(&input_path)->composing()->default_value("data.txt"), "ГЏГіГІГј ГЄ ГґГ Г©Г«Гі")
+            ("threshold", boost::program_options::value<int>(&threshold)->composing()->default_value(1), "ГЇГ®Г°Г®ГЈ");
         try {
         boost::program_options::store(boost::program_options::parse_command_line(argc, argv, m_desk), m_vm);
         }
         catch (std::string ex) {
-            std::cout << "Пожалуйста, используйте --help опцию для вывода справки"
+            std::cout << "ГЏГ®Г¦Г Г«ГіГ©Г±ГІГ , ГЁГ±ГЇГ®Г«ГјГ§ГіГ©ГІГҐ --help Г®ГЇГ¶ГЁГѕ Г¤Г«Гї ГўГ»ГўГ®Г¤Г  Г±ГЇГ°Г ГўГЄГЁ"
                 << std::endl;
         }
         boost::program_options::notify(m_vm);
@@ -29,7 +30,7 @@ int EApplication::exec() {
    else {
         if (ar > 1)
         {
-            std::cout <<"Аргументов "<< ar << std::endl;
+            std::cout <<"ГЂГ°ГЈГіГ¬ГҐГ­ГІГ®Гў "<< ar << std::endl;
             if (m_vm.count("log_debug")) {
                 LogSingleton::getInstance()->Log_level(true);
             }
@@ -47,7 +48,7 @@ int EApplication::exec() {
             LogSingleton::getInstance()->Write(std::to_string(usedMemory->Used()));
         }
         else {
-            std::cout << "Пожалуйста, используйте --help опцию для вывода справки"
+            std::cout << "ГЏГ®Г¦Г Г«ГіГ©Г±ГІГ , ГЁГ±ГЇГ®Г«ГјГ§ГіГ©ГІГҐ --help Г®ГЇГ¶ГЁГѕ Г¤Г«Гї ГўГ»ГўГ®Г¤Г  Г±ГЇГ°Г ГўГЄГЁ"
                 << std::endl;
             return 1;
         }
