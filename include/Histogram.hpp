@@ -1,3 +1,4 @@
+// Copyright 2021 Andreytorix
 #pragma once
 #include <string>
 #include <iostream>
@@ -13,7 +14,7 @@ public:
 		threshold_count = th;
 	}
 	void Message() {
-		LogSingleton::getInstance()->Write("—Â‰ÌÂÂ ÁÌ‡˜ÂÌËÂ: " + std::to_string(score) + " ŒÚ·Ó¯ÂÌÓ: " + std::to_string(threshold_count));
+		LogSingleton::getInstance()->Write("–°—Ä–µ–¥–Ω–µ–µ –∑–Ω–∞—á–µ–Ω–∏–µ: " + std::to_string(score) + " –û—Ç–±—Ä–æ—à–µ–Ω–æ: " + std::to_string(threshold_count));
 	}
 	Histogram(){}
 
