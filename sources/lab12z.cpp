@@ -1,4 +1,5 @@
-﻿#include <iostream>
+// Copyright 2021 Andreytorix
+#include <iostream>
 #include "menu.hpp"
 
 int main(int argc, const char* argv[])
