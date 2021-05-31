@@ -1,85 +1,43 @@
-// Copyright 2020 Andreytorix
+// Copyright 2021 Andreytorix
 #include <gtest/gtest.h>
-#include <utility>
-#include "../include/Stack.hpp"
-#include "../include/Stack_2.hpp"
-
-class MyClass {
-    std::string name;
-    int value;
-public:
-   explicit MyClass(int value_ = 0, std::string name_ = "EMPTY")
-        : name(std::move(name_)), value(value_) {}
-
-    std::string GetName() const { return name; }
-    int GetValue() const { return value; }
-};
-
-TEST(class_Stack, Test1) {
-    Stack<int> obj1;
-    int x1 = 1;
-    int x2 = 2;
-    int x3 = 3;
-    obj1.push(x1);
-    obj1.push(x2);
-    obj1.push(x3);
-    EXPECT_EQ(obj1.head(), 3);
-    obj1.pop();
-    EXPECT_EQ(obj1.head(), 2);
-    obj1.pop();
-    EXPECT_EQ(obj1.head(), 1);
+#include "../include/UsedMemory.hpp"
+#include "../include/PageContainer.hpp"
+#include <fstream>
+TEST(TestCaseUsed_memory, Test1) {
+	LogSingleton::getInstance()->Log_level(true);
+	UsedMemory m;
+	std::vector<std::string> old_items{"test1"};
+	std::vector<std::string> new_items{"test1","test2","test3"};
+	m.OnRawDataLoad(old_items, new_items);
+  EXPECT_EQ(m.Used(), 30);
+}
+TEST(TestItems, Test2) {
+	UsedMemory m;
+	std::vector<Item> old_items1{};
+	std::vector<Item> new_items1{};
+	Item tmp;
+	tmp.id = 1;
+	tmp.name = "test1";
+	tmp.score = 10;
+	new_items1.push_back(tmp);
+	tmp.id = 2;
+	tmp.name = "test2";
+	tmp.score = 20;
+	new_items1.push_back(tmp);
+	tmp.id = 3;
+	tmp.name = "test3";
+	tmp.score = 30;
+	new_items1.push_back(tmp);
+	m.OnDataLoad(old_items1, new_items1);
+	std::cout << m.Used() << std::endl;
+	EXPECT_EQ(m.Used(), 102);
+  EXPECT_TRUE(true);
 }
 
-TEST(class_Stack, Test2) {
-    Stack<MyClass> obj1;
-    MyClass x1;
-    MyClass x2(10, "lala");
-    MyClass x3(11, "hihi");
-    obj1.push(x1);
-    obj1.push(x2);
-    obj1.push(x3);
-
-    EXPECT_EQ(obj1.Length(), 3);
-    EXPECT_EQ(obj1.head().GetName(), "hihi");
-    EXPECT_EQ(obj1.head().GetValue(), 11);
-    obj1.pop();
-    EXPECT_EQ(obj1.Length(), 2);
-    EXPECT_EQ(obj1.head().GetName(), "lala");
-    EXPECT_EQ(obj1.head().GetValue(), 10);
-    obj1.pop();
-    EXPECT_EQ(obj1.Length(), 1);
-    EXPECT_EQ(obj1.head().GetName(), "EMPTY");
-    EXPECT_EQ(obj1.head().GetValue(), 0);
-}
-
-TEST(class_Stack_2, Test1) {
-    Stack_2<int> sp;
-    sp.push_emplace(5, 8, 2, 5, 8);
-    EXPECT_EQ(sp.pop(), 8);
-    EXPECT_EQ(sp.pop(), 5);
-    EXPECT_EQ(sp.pop(), 2);
-    EXPECT_EQ(sp.pop(), 8);
-    EXPECT_EQ(sp.pop(), 5);
-}
-
-TEST(class_Stack_2, Test2) {
-    Stack_2<MyClass> obj2;
-    MyClass x1;
-    MyClass x2(10, "lala");
-    MyClass x3(11, "hihi");
-    obj2.push_emplace(x1, x2, x3);
-    EXPECT_EQ(obj2.Length(), 3);
-    MyClass ptr = obj2.pop();
-    EXPECT_EQ(obj2.Length(), 2);
-    EXPECT_EQ(ptr.GetName(), "hihi");
-    EXPECT_EQ(ptr.GetValue(), 11);
-    ptr = obj2.pop();
-    EXPECT_EQ(obj2.Length(), 1);
-    EXPECT_EQ(ptr.GetName(), "lala");
-    EXPECT_EQ(ptr.GetValue(), 10);
-    ptr = obj2.pop();
-    EXPECT_EQ(obj2.Length(), 0);
-    EXPECT_EQ(ptr.GetName(), "EMPTY");
-    EXPECT_EQ(ptr.GetValue(), 0);
+TEST(incorrect, EmptyFile) {
+	std::ifstream emptyfile{ "empty.txt" };
+	UsedMemory* usedMemory = new UsedMemory();
+	PageContainer* pageContainer = new PageContainer(usedMemory);
+	EXPECT_THROW(pageContainer->Load(emptyfile,10), std::runtime_error);
 }
 
