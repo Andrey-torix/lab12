@@ -39,5 +39,7 @@ TEST(incorrect, EmptyFile) {
 	UsedMemory* usedMemory = new UsedMemory();
 	PageContainer* pageContainer = new PageContainer(usedMemory);
 	EXPECT_THROW(pageContainer->Load(emptyfile,10), std::runtime_error);
+	delete(usedMemory);
+	delete(pageContainer);
 }*/
 
